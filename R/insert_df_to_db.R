@@ -1,16 +1,17 @@
 
 insert_df_to_db <- function(df, conn, name, size = 1e3, insert_to_existing_table = F){
   
-  if (sum(str_detect(names(df), fixed("."))) > 0) {
-    cat("df contains column names with a '.', which is problematic for databases -- removing '.' from column names\n")
-    setnames(df, names(df), str_replace_all(names(df), pattern = fixed("."), replacement = ""))  
-  }
-  
-  
   require(DBI)
   require(tau)
   require(plyr)
   require(dplyr)
+  require(stringr)
+  
+  if (sum(str_detect(names(df), fixed("."))) > 0) {
+    cat("df contains column names with a '.', which is problematic for databases -- removing '.' from column names\n")
+    setnames(df, names(df), str_replace_all(names(df), pattern = fixed("."), replacement = ""))  
+  }
+    
   
   ## Helper function ##
   
